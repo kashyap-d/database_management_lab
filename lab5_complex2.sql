@@ -35,10 +35,14 @@
 -- then first name.
 
 -- Answer:
-SELECT e.Lname, w.Pno
-FROM EMPLOYEE e
-JOIN WORKS_ON w ON e.Ssn = w.Essn
-ORDER BY e.Dno, e.Lname, e.Fname;
+select e.lname,
+       w.pno
+  from employee e
+  join works_on w
+on e.ssn = w.essn
+ order by e.dno,
+          e.lname,
+          e.fname;
 
 
 
@@ -46,55 +50,84 @@ ORDER BY e.Dno, e.Lname, e.Fname;
 -- name and is the same sex as the employee.
 
 -- Answer:
-select distinct e.fname from employee e 
-join DEPENDENT de on e.SSN=de.ESSN
-where de.DEPENDENT_NAME=e.fname and e.SEX=de.SEX;
+select distinct e.fname
+  from employee e
+  join dependent de
+on e.ssn = de.essn
+ where de.dependent_name = e.fname
+   and e.sex = de.sex;
 
 
 -- 8. Retrieve the names of employees who have no dependents.
 
 -- Answer:
-select e.fname from employee e 
-left join DEPENDENT de on e.SSN=de.ESSN
-where de.DEPENDENT_NAME is null;
+select e.fname
+  from employee e
+  left join dependent de
+on e.ssn = de.essn
+ where de.dependent_name is null;
 
 -- 9. List the names of managers who have at least one dependent.
 
 -- Answer:
-select distinct e.fname from EMPLOYEE e
-join DEPARTMENT d on e.ssn=d.MGR_SSN
-join DEPENDENT de on e.ssn=de.ESSN;
+select distinct e.fname
+  from employee e
+  join department d
+on e.ssn = d.mgr_ssn
+  join dependent de
+on e.ssn = de.essn;
 
 
 -- 10. Find the sum of the salaries of all employees, the maximum salary, the minimum 
 -- salary, and the average salary.
 
 -- Answer:
-SELECT 
-    SUM(Salary), MAX(Salary), MIN(Salary), AVG(Salary)
-FROM EMPLOYEE;
+select sum(salary),
+       max(salary),
+       min(salary),
+       avg(salary)
+  from employee;
 
 -- 11. For each project, retrieve the project number, the project name, and the number 
 -- of employees who work on that project.
 
 -- Answer:
-select p.pnumber, p.pname, count(*) from project p
-join WORKS_ON w on p.PNUMBER=w.PNO
-group by p.pnumber,p.PNAME;
+select p.pnumber,
+       p.pname,
+       count(*)
+  from project p
+  join works_on w
+on p.pnumber = w.pno
+ group by p.pnumber,
+          p.pname;
 
 -- 12. For each project on which more than two employees work, retrieve the project 
 -- number, the project name, and the number of employees who work on the project.
 
 -- Answer:
-select p.pnumber, p.pname, count(*) from project p
-join WORKS_ON w on p.PNUMBER=w.PNO
-group by p.pnumber,p.PNAME having count(*)>2;
+select p.pnumber,
+       p.pname,
+       count(*)
+  from project p
+  join works_on w
+on p.pnumber = w.pno
+ group by p.pnumber,
+          p.pname
+having count(*) > 2;
 
 -- 13. For each department that has more than five employees, retrieve the department 
 -- number and the number of its employees who are making more than 40,000.
 
 -- Answer:revise this
-select d.dnumber,count(case when salary>40000 then 1 end) as rich_niggas
-from DEPARTMENT d join
-employee e on d.DNUMBER=e.DNO
-group by d.dnumber having count(*)>0;
+select d.dnumber,
+       count(
+          case
+             when salary > 40000 then
+                1
+          end
+       ) as rich_niggas
+  from department d
+  join employee e
+on d.dnumber = e.dno
+ group by d.dnumber
+having count(*) > 0;

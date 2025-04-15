@@ -1,35 +1,71 @@
-/* --1
-create table emp
-(eno number(2) primary key,
-ename varchar(20) not null,
-gender char(1) not null check (gender in('M','F')),
-sal number(10,2) not null,
-addr varchar(40) not null
+--1
+create table emp (
+   eno    number(2) primary key,
+   ename  varchar(20) not null,
+   gender char(1) not null check ( gender in ( 'M',
+                                               'F' ) ),
+   sal    number(10,2) not null,
+   addr   varchar(40) not null
 );
 
 --2
-create table dep(
-    depno number(2) primary key,
-    depname varchar(10) not null UNIQUE
+create table dep (
+   depno   number(2) primary key,
+   depname varchar(10) not null unique
 );
 
 --3//understand the exact working of foreign key and its purpose
-alter table emp add (dno number(2));
-alter table emp modify (dno number(4));
-alter table dep modify (depno number(4));
-alter table emp add CONSTRAINT fkdno FOREIGN key(dno) REFERENCES dep(depno);
+alter table emp add (
+   dno number(2)
+);
+alter table emp modify (
+   dno number(4)
+);
+alter table dep modify (
+   depno number(4)
+);
+alter table emp
+   add constraint fkdno foreign key ( dno )
+      references dep ( depno );
 desc emp;
 
 --4
-insert into dep values(1111,'cse');
-insert into dep values(2222,'ece');
-insert into dep values(3333,'dse');
-insert into dep values(4444,'eee');
-INSERT into emp VALUES(43,'kashyap','M',12345678.12,'hyd',1111);
-INSERT into emp VALUES(22,'bun','M',1234567.12,'blr',2222);
-INSERT into emp VALUES(55,'tanav','M',123456.12,'krl',3333);
-INSERT into emp VALUES(60,'mudit','M',12345679.12,'bmb',4444);
-select * from emp join dep on emp.dno=dep.DEPNO;
+insert into dep values ( 1111,
+                         'cse' );
+insert into dep values ( 2222,
+                         'ece' );
+insert into dep values ( 3333,
+                         'dse' );
+insert into dep values ( 4444,
+                         'eee' );
+insert into emp values ( 43,
+                         'kashyap',
+                         'M',
+                         12345678.12,
+                         'hyd',
+                         1111 );
+insert into emp values ( 22,
+                         'bun',
+                         'M',
+                         1234567.12,
+                         'blr',
+                         2222 );
+insert into emp values ( 55,
+                         'tanav',
+                         'M',
+                         123456.12,
+                         'krl',
+                         3333 );
+insert into emp values ( 60,
+                         'mudit',
+                         'M',
+                         12345679.12,
+                         'bmb',
+                         4444 );
+select *
+  from emp
+  join dep
+on emp.dno = dep.depno;
 
 --5
 --done
@@ -39,17 +75,46 @@ select * from emp join dep on emp.dno=dep.DEPNO;
 
 --7
 alter table emp drop constraint fkdno;
-alter table emp add constraint fkdno foreign key(dno) references dep(depno) on delete cascade;
+alter table emp
+   add constraint fkdno
+      foreign key ( dno )
+         references dep ( depno )
+            on delete cascade;
 --trying out cascade delete
-delete from dep where depno=4444;
+delete from dep
+ where depno = 4444;
 
 --8
-alter table emp modify sal default 10000;
+alter table emp modify
+   sal default 10000;
 --if no value inserted default const makes sal 10000
-INSERT into emp(eno,ename,gender,addr,dno) VALUES(44,'vinay','M','hyd',1111);
+insert into emp (
+   eno,
+   ename,
+   gender,
+   addr,
+   dno
+) values ( 44,
+           'vinay',
+           'M',
+           'hyd',
+           1111 );
 --if value inserted then there is no constraint acting here
-INSERT into emp(eno,ename,gender,addr,dno,sal) VALUES(45,'vinay2','M','hyd',1111,1);
-delete from emp where ename like '%vinay%'; */
+insert into emp (
+   eno,
+   ename,
+   gender,
+   addr,
+   dno,
+   sal
+) values ( 45,
+           'vinay2',
+           'M',
+           'hyd',
+           1111,
+           1 );
+delete from emp
+ where ename like '%vinay%'; 
 
 --9 and 10 done
 
