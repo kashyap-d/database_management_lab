@@ -67,8 +67,12 @@ select *
   join dep
 on emp.dno = dep.depno;
 
---5
---done
+--5 try to insert a couple of tuples into emp and dep that violates some constraints
+/*
+insert into emp values(
+   1,'samplename','M',12345678.12,'hyd',1234
+);
+*/
 
 --6
 --done
