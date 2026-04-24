@@ -74,8 +74,10 @@ insert into emp values(
 );
 */
 
---6
---done
+--6 Try to modify/delete a tuple which violates a constraint.
+/*gives error because cascade delete not enabled yet
+delete from dep where depno=1111;
+*/
 
 --7
 alter table emp drop constraint fkdno;
