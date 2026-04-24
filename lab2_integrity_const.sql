@@ -130,7 +130,7 @@ select c.title
  where dept_name = 'Comp. Sci.'
    and credits = 3;
 
---12
+--12 
 select c.course_id,
        c.title
   from student s
@@ -139,6 +139,8 @@ on s.id = t.id
   join course c
 on t.course_id = c.course_id
  where s.id = 12345;
+--btw really interesting thing is u dont even need student table just 
+--takes and course is enough
 
 --13
 select name
